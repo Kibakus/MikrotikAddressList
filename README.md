@@ -36,26 +36,40 @@ python3 /home/ipadd/base.py
 Nano(Vim) /etc/systemd/system/ipadd.service
 
 """START"""
+
 [Unit]
+
 Description=telebot
+
 After=network.target
 
 [Service]
+
 Type=simple
+
 ExecStart=/usr/bin/python3 /home/ipadd/web.py -s
+
 TimeoutStartSec=0
+
 Restart=always
+
 RestartSec=60
 
 [Install]
+
 WantedBy=default.target
+
 """END"""
 
 
 ============Daemon=============
 
 systemctl restart ipadd.service		(restart)
+
 systemctl start ipadd.service		(Start)
+
 systemctl enable ipadd.service		(ON AutoRun)
+
 systemctl disable ipadd.service		(OFF AutoRun)
+
 systemctl status ipadd.service		(STATUS AutoRun)
