@@ -1,0 +1,131 @@
+<style>
+a {
+  text-decoration: none;
+}
+ * {
+box-sizing: border-box;
+}
+*:focus {
+outline: none;
+}
+body {
+font-family: Arial;
+background-color: #E55423;
+padding: 50px;
+}
+.login {
+margin: 20px auto;
+}
+.login-screen {
+background-color: #FFF;
+padding: 20px;
+border-radius: 5px
+}
+.app-title {
+text-align: center;
+color: #777;
+}
+.login-form {
+text-align: center;
+}
+.control-group {
+margin-bottom: 10px;
+}
+
+.login-link {
+font-size: 12px;
+color: #444;
+display: block;
+margin-top: 12px;
+}
+
+select {
+text-align: center;
+text-align-last: center;
+background-color: #ECF0F1;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+-webkit-appearance: none;
+-moz-appearance: none;
+text-indent: 1px;
+text-overflow: '';
+}
+
+table {
+  margin: auto;
+  align: centre;
+  width: 300;
+  border: 1;
+  border-collapse: collapse; 
+  line-height: 1.1;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  background:  radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+  color: #0C213B;
+}
+th {
+  border: 1px solid;
+  padding: 5px;
+}
+td {
+  border: 1px solid;
+  padding: 5px;
+}
+</style>
+<title>Change-Edit</title>
+{% block body %}
+<div class="login">
+  <div class="login-screen">
+    <div class="app-title">
+      <h1>{{ listname }} edit</h1>
+    </div>
+  <div class="login-form">
+    <br/>
+    <select id="editlist", name="editlist">
+      <option value="" selected disabled hidden>Choose list</option>
+      {% for i in editlist %}
+      <option value={{ i }}>{{ i }}</option>
+      {% endfor %}
+    </select>
+    {% if listname %}
+    <br/><br/>
+    <form autocomplete="off" action="/editadd" method="POST">
+      <input type="text" value="" placeholder="IP" name="ip">
+      <input type="text" value="" placeholder="Comment" name="comment">
+      <input type="submit" value="✔️">
+    </form>
+    <br/>
+    <table>
+    <tr>
+        <th>LIST</th>
+        <th>Ip</th>
+        <th>Comment</th> 
+        <th>💀</th> 
+    </tr> 
+    {% for comment, listname, ip in listCustom %}
+    <tr>
+        <td>{{ listname }}</td>
+        <td>{{ ip }}</td>
+        <td>{{ comment }}</td>
+        <td><a href={{"/close?ip=" ~ ip ~ "&listname=" ~ listname ~ "&comment=" ~ comment}}>❌</a></td>
+    </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+    <center>
+     <br/>
+     <a href="/back">Back</a>
+    </center>
+   </div>
+  </div>
+ </div>
+{% endblock %}
+
+<script>
+let el = document.getElementById('editlist');
+el.addEventListener('change', function(e){
+   let value = e.target.value;
+   location.href = '/listcustom?listUse=' + value;
+})
+</script>

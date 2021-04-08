@@ -1,0 +1,203 @@
+<style>
+a {
+  text-decoration: none;
+}
+ * {
+box-sizing: border-box;
+}
+*:focus {
+outline: none;
+}
+body {
+font-family: Arial;
+background-color: #E55423;
+padding: 50px;
+}
+.login {
+margin: 20px auto;
+width: 300px;
+}
+.login-screen {
+background-color: #FFF;
+padding: 20px;
+border-radius: 5px
+}
+.app-title {
+text-align: center;
+color: #777;
+}
+.login-form {
+text-align: center;
+}
+.control-group {
+margin-bottom: 10px;
+}
+
+
+input[type="number"] {
+-moz-appearance: textfield;
+text-align: center;
+background-color: #ECF0F1;
+border: 1px solid #000000;
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+input[type="number"]:focus {
+margin: 0;
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="text"] {
+text-align: center;
+background-color: #ECF0F1;
+border: 1px solid #000000;
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+input[type="text"]:focus {
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+
+
+select {
+text-align: center;
+text-align-last: center;
+background-color: #ECF0F1;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+-webkit-appearance: none;
+-moz-appearance: none;
+text-indent: 1px;
+text-overflow: '';
+}
+
+
+
+.btn {
+border: 2px solid transparent;
+background: #E55423;
+color: #ffffff;
+font-size: 16px;
+line-height: 25px;
+padding: 10px 0;
+text-decoration: none;
+text-shadow: none;
+border-radius: 3px;
+box-shadow: none;
+transition: 0.25s;
+display: block;
+width: 250px;
+margin: 0 auto;
+}
+.btn:hover {
+background-color: #E55423;
+}
+.login-link {
+font-size: 12px;
+color: #444;
+display: block;
+margin-top: 12px;
+}
+table {
+  border-collapse: collapse; 
+  line-height: 1.1;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  background:  radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+  color: #0C213B;
+}
+th {
+  border: 1px solid #A9E2CC;
+  padding: 5px;
+}
+td {
+  border: 1px solid #A9E2CC;
+  padding: 5px;
+}
+</style>
+<script>
+  function fun1() {
+  if (document.getElementById('ip').checked) {
+    document.getElementById('ipaddress').style.display="block";
+    document.getElementById('ipaddress').style.margin="5px auto"
+  }
+  else {
+    document.getElementById('ipaddress').value=""
+    document.getElementById('ipaddress').style.display="none";
+  }
+}
+</script>
+<title>Address-list</title>
+{% block body %}
+<form action="/obr" method="POST">
+<div class="login">
+  <div class="login-screen">
+    <div class="app-title">
+      <h1>Timeout hours</h1>
+    </div>
+  <div class="login-form">
+  <h2>{{status}}</h2>
+    <select id="listM", name="listM">
+      {% for i in listsUser %}
+      <option value={{ i }}>{{ i }}</option>
+      {% endfor %}
+    </select>
+    <input type="number" min=1 max=24 value="1" placeholder="timeout (24h max)" name="timeout">
+    <label><input style="vertical-align:middle" type="hidden" name="change" value="0"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"> Change</label>
+    <label><input style="vertical-align:middle" type="checkbox" id="ip" name="ip" onchange="fun1()"> Custom IP</label>
+    <input style="display:none" type="text" id="ipaddress" placeholder="IP Address" name="ipaddress">
+    <input type="submit" value="Submit" class="btn btn-primary btn-large btn-block">
+    <br/>
+    <a href="/changepass">Change Password</a>
+    <br/>
+    <br/>
+    {% if listsite == True %}
+    <a href="/edit">Edit all list</a>
+    <br/>
+    <br/>
+    {% endif %}
+    <a href="/logout">Logout</a>
+   </div>
+  </div>
+</div>
+<table style="margin: auto;" align="centre" width="300" border = "1">
+    <tr>
+        <th>LIST</th>
+        <th>Username</th>
+        <th>Ip(DNS)</th>
+        <th>Timeout</th> 
+        <th>💀</th> 
+    </tr> 
+    {% for id, user, listm, ip, time, dns in table %}
+    {% if user == username %}
+    <tr>
+        <td>{{ listm }}</td>
+        <td>{{ user }}</td>
+        <td>{{ dns }}</td>
+        <td style="text-align: center;">{{ time }}</td>
+        <td><a href={{"/close?ip=" ~ ip ~ "&listname=" ~ listm}}>❌</a></td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </table>
+</form>
+{% endblock %}
+
+
