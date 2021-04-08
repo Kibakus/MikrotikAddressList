@@ -3,29 +3,32 @@
 ======INSTALL(Deb/Ubunt)=======
 
 sudo apt install -y geany			(editor python)
-sudo apt install -y python3-pip		(python3 + pip3)
-pip3 install flask					(web)
-pip3 install flask-login			(web login)
-pip3 install passlib				(sha256)
-pip3 install paramiko				(SSH connect)
-pip3 install arpreq					(MAC find)
-pip3 install dnspython				(nslookup)
 
-===============================
+sudo apt install -y python3-pip		(python3 + pip3)
+
+pip3 install flask					(web)
+
+pip3 install flask-login			(web login)
+
+pip3 install passlib				(sha256)
+
+pip3 install paramiko				(SSH connect)
+
+pip3 install arpreq					(MAC find)
+
+pip3 install dnspython				(nslookup)
 
 
 =========Start(MANUAL)=========
 
 python3 /home/ipadd/web.py
 
-===============================
 
 
 ===========Edit Base===========
 
 python3 /home/ipadd/base.py
 
-===============================
 
 
 ====Create Daemon(AutoRun)=====
@@ -48,8 +51,6 @@ RestartSec=60
 WantedBy=default.target
 """END"""
 
-===============================
-
 
 ============Daemon=============
 
@@ -58,7 +59,3 @@ systemctl start ipadd.service		(Start)
 systemctl enable ipadd.service		(ON AutoRun)
 systemctl disable ipadd.service		(OFF AutoRun)
 systemctl status ipadd.service		(STATUS AutoRun)
-
-===============================
-
-© 2021 GitHub, Inc.
